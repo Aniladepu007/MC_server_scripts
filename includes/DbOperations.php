@@ -9,7 +9,7 @@ class DbOperations {
 		$this->con = $db->connect();
 	}
 
-	/*CRUD -> C -> CREATE*/
+/******************************** PAT ************************************/
 	public function createUser($Pid,$email,$pass,$check_pass,$Name,$sex,$DOB,$Mob_no,$Hostel,$Room_no,$Bloodgrp,$Weight,$lati,$longi) {
 		//checking if patient is already registered
 		if($this->isPatientExists($email)) {
@@ -83,4 +83,55 @@ class DbOperations {
 		$stmt->execute();
 		return $stmt->get_result()->fetch_assoc();
 	}
+	/******************************** E.O.PAT ************************************/
+	/********************************** DOC ************************************/
+
+public function createDoc($username,$email,$fullname,$pass,$check_pass,$specialization,$shiftType,$Mob_no,$sex,$DOB) {
+		//checking if patient is already registered
+		if($this->isDocExists($email)) {
+			return 0; //exists
+		}else {
+			if($this->isUserNameTaken($username)) {
+				return 5;
+			}
+			else {
+				if(empty($pass) || empty($check_pass)) {
+					return 3;	//can't be empty
+				}
+				elseif($pass != $check_pass) {
+					return 4;	//passwords don't match
+				}
+				else {
+					//encrypting password
+					$encrypted1 = md5($pass);
+					$encrypted2 = md5($check_pass);
+					//generating an API key
+					//$apikey = $key->generateApikey();
+
+					$stmt = $this-> con-> prepare("INSERT INTO `Pat_pro` (`Pid`,`email`, `Password`, `ConfirmPass`,`Name`, `Sex`,
+						 `DOB`, `Mob_no`, `Hostel`, `Roomno`, `Bloodgrp`, `weight`,`lati`,`longi`) VALUES (?, ?, ?, ?, ?, ?, ?, ?,
+							 ?, ?, ?, ?, ?, ?);");
+					//binding parameters
+					$stmt->bind_param("ssssssssssssss",$Pid,$email,$Password,$encrypted1,$Name,$sex,$DOB,$Mob_no,$Hostel,$Room_no,$Bloodgrp,$Weight,$lati,$longi);
+
+					if($stmt->execute()){
+						return 1;
+						//patient registered successfully
+					}
+					else{
+						return 2;
+						//failed to register patient
+					}
+				}
+			}
+
+		}
+	}
+
+
+}
+
+
+	/******************************** E.O.DOC **********************************/
+
 }
