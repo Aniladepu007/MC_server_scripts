@@ -33,7 +33,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
             }
             elseif($result == 4) {
                   $response['error'] = true;
-                  $response['message'] = "Some error occurred please try again";
+                  $response['message'] = "Some Error occurred please try again";
             }
 
       }

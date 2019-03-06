@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 //                  $response['longi'] = $user['longi'];
             }else {
                   $response['error'] = true;
-                  $response['message'] = 'Invalid username or password!';
+                  $response['message'] = 'Invalid Username or Password!';
             }
 
       } else {
