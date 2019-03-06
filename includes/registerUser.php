@@ -27,15 +27,18 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 					$response['error'] = true;
 					$response['message'] = "Some error occurred please try again";
 					//mysqli_connect_error();
-				}elseif($result == 0) {
+				}elseif($result == 5) {
                               $response['error'] = true;
-					$response['message'] = "User already exists! please goto LOGIN!";
+					$response['message'] = "Username already taken. Choose another!";
                         }elseif($result == 3) {
                               $response['error'] = true;
 					$response['message'] = "Passwords can't be empty";
                         }elseif($result == 4) {
                               $response['error'] = true;
 					$response['message'] = "Confirm Password don't match!";
+                        }elseif($result == 0) {
+                              $response['error'] = true;
+					$response['message'] = "Email already registered! goto LOGIN";
                         }
 		}
 		else
