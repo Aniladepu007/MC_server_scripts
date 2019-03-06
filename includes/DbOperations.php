@@ -129,7 +129,7 @@ public function createDoc($username,$email,$fullname,$pass,$check_pass,$speciali
 	}
 
 
-}
+
 
 
 	/******************************** E.O.DOC **********************************/
