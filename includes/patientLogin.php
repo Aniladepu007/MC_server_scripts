@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                   $response['longi'] = $user['longi'];
             }else {
                   $response['error'] = true;
-                  $response['message'] = 'Required fields are missing!';
+                  $response['message'] = 'Invalid username or password!';
             }
 
       }else {
