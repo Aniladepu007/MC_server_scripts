@@ -32,7 +32,7 @@ class DbOperations {
 					//generating an API key
 					//$apikey = $key->generateApikey();
 
-					$stmt = $this-> con-> prepare("INSERT INTO `Pat_pro` (`Pid`,`email`, `Password`, `ConfirmPass`,`Name`, `Sex`,
+					$stmt = $this->con-> prepare("INSERT INTO `Pat_pro` (`Pid`,`email`, `Password`, `ConfirmPass`,`Name`, `Sex`,
 						 `DOB`, `Mob_no`, `Hostel`, `Roomno`, `Bloodgrp`, `weight`,`lati`,`longi`) VALUES (?, ?, ?, ?, ?, ?, ?, ?,
 							 ?, ?, ?, ?, ?, ?);");
 					//binding parameters
@@ -84,8 +84,8 @@ class DbOperations {
 		return $stmt->get_result()->fetch_assoc();
 	}
 	/******************************** E.O.PAT ************************************/
-	/********************************** DOC ************************************/
 
+	/********************************** DOC ************************************/
 public function createDoc($username,$email,$fullname,$pass,$check_pass,$specialization,$shiftType,$Mob_no,$sex,$DOB) {
 		//checking if patient is already registered
 		if($this->isDocExists($email)) {
@@ -108,11 +108,10 @@ public function createDoc($username,$email,$fullname,$pass,$check_pass,$speciali
 					//generating an API key
 					//$apikey = $key->generateApikey();
 
-					$stmt = $this-> con-> prepare("INSERT INTO `Pat_pro` (`Pid`,`email`, `Password`, `ConfirmPass`,`Name`, `Sex`,
-						 `DOB`, `Mob_no`, `Hostel`, `Roomno`, `Bloodgrp`, `weight`,`lati`,`longi`) VALUES (?, ?, ?, ?, ?, ?, ?, ?,
-							 ?, ?, ?, ?, ?, ?);");
+					$stmt = $this->con-> prepare("INSERT INTO `Doc_pro` (`Username`,`email`, `FullName`, `Password`, `ConfirmPass`,`specialization`,
+						`shift_type`, `Mob_no`, `Sex`, `DOB`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 					//binding parameters
-					$stmt->bind_param("ssssssssssssss",$Pid,$email,$Password,$encrypted1,$Name,$sex,$DOB,$Mob_no,$Hostel,$Room_no,$Bloodgrp,$Weight,$lati,$longi);
+					$stmt->bind_param("ssssssssss",$username,$email,$fullname,$encrypted1,$encrypted2,$specialization,$shiftType,$Mob_no,$sex,$DOB);
 
 					if($stmt->execute()){
 						return 1;
@@ -128,9 +127,37 @@ public function createDoc($username,$email,$fullname,$pass,$check_pass,$speciali
 		}
 	}
 
+private function isDocExists($email) {
+	$stmt = $this->con->prepare("SELECT email from Doc_pro where email = ?");
+	$stmt->bind_param("s",$email);
+	$stmt->execute();
+	$stmt->store_result();
+	return $stmt->num_rows > 0;
+}
 
+private function isUserNameTaken($username) {
+	$stmt = $this->con->prepare("SELECT Username from Doc_pro where Username = ?");
+	$stmt->bind_param("s",$username);
+	$stmt->execute();
+	$stmt->store_result();
+	return $stmt->num_rows > 0;
+}
 
+public function getDocByUsername($username) {
+	$stmt = $this->con->prepare("SELECT * from Doc_pro where Username = ?");
+	$stmt->bind_param("s",$username);
+	$stmt->execute();
+	return $stmt->get_result()->fetch_assoc();
+}
 
+public function docLogin($username, $Pass) {
+	$Password = md5($Pass);
+	$stmt = $this->con->prepare("SELECT Username FROM Doc_pro where Username = ? and Password = ?");
+	$stmt->bind_param("ss",$username,$Password);
+	$stmt->execute();
+	$stmt->store_result();
+	return $stmt->num_rows > 0;
+}
 
 	/******************************** E.O.DOC **********************************/
 

@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                   $response['message'] = 'Invalid username or password!';
             }
 
-      }else {
+      } else {
             $response['error'] = true;
             $response['message'] = 'Required fields are missing!';
       }
