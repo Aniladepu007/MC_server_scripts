@@ -4,33 +4,38 @@ require_once 'DbOperations.php';
 $response = array();
 
 if($_SERVER['REQUEST_METHOD']=='POST') {
+
       if( isset($_POST['Pid']) and isset($_POST['password']) ){
             $db = new DbOperations();
 
             if($db->patientLogin( $_POST['Pid'], $_POST['password'] )) {
                   $user = $db->getPatientbyPid($_POST['Pid']);
+
                   $response['error'] = false;
-                  $response['Pid'] = $user['Pid'];
-                  $response['email'] = $user['email'];
-                  $response['Password'] = $user['Password'];
-                  $response['Name'] = $user['Name'];
-                  $response['Sex'] = $user['Sex'];
-                  $response['DOB'] = $user['DOB'];
-                  $response['Mob_no'] = $user['Mob_no'];
-                  $response['Hostel'] = $user['Hostel'];
-                  $response['Roomno'] = $user['Roomno'];
-                  $response['Bllodgrp'] = $user['Bloodgrp'];
-                  $response['weight'] = $user['weight'];
-                  $response['lati'] = $user['lati'];
-                  $response['longi'] = $user['longi'];
-            }else {
+                  $response['message'] = 'LoggedIn Successfully!';
+
+                  while($fetch_row = $user->fetch_assoc()) {
+                        $response[] = array(
+                                          'PatientID' => $fetch_row['Pid'],
+                                          //'Hospital' => $fetch_row['Hospital_name'],
+                                          'DocID' => $fetch_row['Username'],
+                                          'Date' => $fetch_row['treatment_date'],
+                                          'Slot'=> $fetch_row['slot'],
+                                          //'Symptoms' => $fetch_row['symptoms'],
+                                          'Diagnosis' => $fetch_row['diagnosis'],
+                                          //'Prescription' => $fetch_row['prescription'],
+                                          //'Remarks' => $fetch_row['remarks'],
+                                    );
+                  }
+            }
+            else {
                   $response['error'] = true;
                   $response['message'] = 'Invalid username or password!';
             }
 
       } else {
             $response['error'] = true;
-            $response['message'] = 'Required fields are missing!';
+            $response['message'] = 'Required fields are missing!!!!';
       }
 }
 

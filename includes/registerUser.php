@@ -40,6 +40,14 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                         $response['error'] = true;
 				$response['message'] = "Email already registered! goto LOGIN";
                   }
+			elseif($result == 6) {
+                        $response['error'] = true;
+				$response['message'] = "Email can't be empty!";
+                  }
+			elseif($result == 7) {
+                        $response['error'] = true;
+				$response['message'] = "Username can't be empty!";
+                  }
 	}
 	else
 		{
