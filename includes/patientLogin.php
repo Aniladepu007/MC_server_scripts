@@ -10,9 +10,9 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
 
             if($db->patientLogin( $_POST['Pid'], $_POST['password'] )) {
                   $user = $db->getPatientbyPid($_POST['Pid']);
-
-                  $response['error'] = false;
-                  $response['message'] = 'LoggedIn Successfully!';
+                  //$response['error'] = false;
+                  //$response['message'] = 'LoggedIn Successfully!';
+                  $response[] = array('error' => false, 'message' => 'LoggedIn Successfully!');
 
                   while($fetch_row = $user->fetch_assoc()) {
                         $response[] = array(
@@ -29,13 +29,15 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                   }
             }
             else {
-                  $response['error'] = true;
-                  $response['message'] = 'Invalid username or password!';
+                  $response[] = array('error' => true, 'message' => 'Invalid username or password!');
+                  //$response['error'] = true;
+                  //$response['message'] = 'Invalid username or password!';
             }
 
       } else {
-            $response['error'] = true;
-            $response['message'] = 'Required fields are missing!!!!';
+            $response[] = array('error' => true, 'message' => 'Required fields are missing!');
+//            $response['error'] = true;
+//            $response['message'] = 'Required fields are missing!';
       }
 }
 
