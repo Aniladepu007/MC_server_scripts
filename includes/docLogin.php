@@ -8,7 +8,7 @@ if( $_SERVER['REQUEST_METHOD']=='POST' ) {
             $db = new DbOperations();
 
             if( $db->docLogin( $_POST['Username'], $_POST['Password']) ) {
-                  $user = $db->getDocByUsername($_POST['Username']);
+/*                  $user = $db->getDocByUsername($_POST['Username']);
                   $response['error'] = false;
                   $response['Username'] = $user['Username'];
                   $response['email'] = $user['email'];
@@ -19,7 +19,10 @@ if( $_SERVER['REQUEST_METHOD']=='POST' ) {
                   $response['shift_type'] = $user['shift_type'];
                   $response['Mob_no'] = $user['Mob_no'];
                   $response['Sex'] = $user['Sex'];
-                  $response['DOB'] = $user['DOB'];
+                  $response['DOB'] = $user['DOB'];*/
+                  $response['error'] = false;
+                  $response['message'] = 'LoggedIn Successfully!';
+
             }else {
                   $response['error'] = true;
                   $response['message'] = 'Invalid Username or Password!';
