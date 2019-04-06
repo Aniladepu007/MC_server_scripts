@@ -4,8 +4,6 @@ require_once 'DbOperations.php';
 
 $response = array();
 
-
-
 if($_SERVER['REQUEST_METHOD']=='POST') {
 	if( isset($_POST['Pid']) and isset($_POST['Hospital_name']) and isset($_POST['Username']) and isset($_POST['treatment_date']) and isset($_POST['slot']) and isset($_POST['symptoms']) and
             isset($_POST['diagnosis']) and isset($_POST['prescription']) and isset($_POST['remarks'])

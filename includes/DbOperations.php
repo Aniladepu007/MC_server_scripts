@@ -91,10 +91,21 @@ class DbOperations {
 		$stmt->execute();
 		return $stmt->get_result();
 	}
+
 	/******************************** E.O.PAT ************************************/
 
 	/********************************** DOC ************************************/
 	public function createDoc($username,$email,$fullname,$pass,$check_pass,$specialization,$shiftType,$Mob_no,$sex,$DOB) {
+		if(empty($username)) {
+			return 7; //email can't be empty
+		}
+		else if(empty($email)) {
+			return 6; //username can't be empty
+		}
+		else if(empty($shiftType)) {
+			return 8;	//shift_type can't be empty
+		}
+		else {
 			//checking if patient is already registered
 			if($this->isDocExists($email)) {
 				return 0; //exists
@@ -137,6 +148,7 @@ class DbOperations {
 
 			}
 		}
+	}
 
 	private function isDocExists($email) {
 		$stmt = $this->con->prepare("SELECT email from Doc_pro where email = ?");
@@ -154,11 +166,11 @@ class DbOperations {
 		return $stmt->num_rows > 0;
 	}
 
-	public function getDocByUsername($username) {
-		$stmt = $this->con->prepare("SELECT * from Doc_pro where Username = ?");
+	public function getDocHistoryByUsername($username) {
+		$stmt = $this->con->prepare("SELECT * from Treatment_details where Username = ?");
 		$stmt->bind_param("s",$username);
 		$stmt->execute();
-		return $stmt->get_result()->fetch_assoc();
+		return $stmt->get_result();
 	}
 
 	public function docLogin($username, $Pass) {

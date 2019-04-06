@@ -35,9 +35,20 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
             }
             elseif($result == 5) {
                   $response['error'] = true;
-                  $response['message'] = "Username already taken. Please choose another!";
+                  $response['message'] = "MedicalID already taken. Please choose another!";
             }
-
+            elseif($result == 6) {
+                  $response['error'] = true;
+                  $response['message'] = "Email can't be empty!";
+            }
+            elseif($result == 7) {
+                  $response['error'] = true;
+                  $response['message'] = "Username can't be empty!";
+            }
+            elseif($result == 8) {
+                  $response['error'] = true;
+                  $response['message'] = "shift_type can't be empty!";
+            }
       }
       else {
             $response['error'] = true;

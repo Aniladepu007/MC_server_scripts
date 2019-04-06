@@ -4,11 +4,11 @@ require_once 'DbOperations.php';
 $response = array();
 
 if($_SERVER['REQUEST_METHOD']=='POST') {
-      if( isset($_POST['Pid']) ) {
+
+      if( isset($_POST['Username']) ) {
             $db = new DbOperations();
 
-            //$user = $db->fetch_card_view(isset($_POST['Pid']), isset($_POST['Username']), isset($_POST['treatment_date']), isset($_POST['slot']));
-            $user = $db->getPatientbyPid($_POST['Pid']);
+            $user = $db->getDocHistoryByUsername($_POST['Username']);
             if($user->num_rows > 0) {
                   //$response['error'] = false;
                   //$response['message'] = 'LoggedIn Successfully!';
@@ -30,9 +30,11 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
             }
             else {
                   $response[] = array('error' => true, 'message' => 'No previous History!');
+
             }
       } else {
-            $response[] = array('error' => true, 'message' => 'Required fields are missing!');
+            //$response[] = array('error' => true, 'message' => 'Failed to fetch data!');
+            $response[] = array('error' => true, 'message' => 'Required fields missing!');
             //$response['error'] = true;
             //$response['message'] = 'Required fields are missing!';
       }
